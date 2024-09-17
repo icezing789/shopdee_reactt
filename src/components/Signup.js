@@ -30,25 +30,36 @@ function Copyright(props) {
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
+const token = localStorage.getItem('token');
 const defaultTheme = createTheme();
+ 
+const headers = {
+  'authorization': `Bearer ${token}`,
+  'Content-Type': 'application/json'
+};
 
 export default function SignUp() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [gender, setGender] = useState("");
+    const [email, setEmail] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try{
-            const response = await axios.post(process.env.REACT_APP_BASE_URL+'/register',
+            const response = await axios.post(process.env.REACT_APP_BASE_URL+'/employee',
                 {
                     username,
                     password,
                     firstName,
-                    lastName
+                    lastName,
+                    email,
+                    gender
                 }
+                ,{headers}
             )
             const result = response.data;
             console.log(result);
@@ -132,6 +143,30 @@ export default function SignUp() {
                   autoComplete="new-password"
                   value={password}
                   onChange={ (e) => setPassword(e.target.value) }
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email"
+                  name="Email"
+                  autoComplete="Email"
+                  value={email}
+                  onChange={ (e) => setEmail(e.target.value) }
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="gender"
+                  label="Gender Male 1 Female 0"
+                  name="Gender"
+                  autoComplete="Gender"
+                  value={gender}
+                  onChange={ (e) => setGender(e.target.value) }
                 />
               </Grid>
               <Grid item xs={12}>

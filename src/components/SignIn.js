@@ -38,7 +38,7 @@ export default function SignIn() {
   const handleSubmit = async (e) => {
       e.preventDefault();
 
-      const response = await axios.post(process.env.REACT_APP_BASE_URL+'/login',
+      const response = await axios.post(process.env.REACT_APP_BASE_URL+'/admin/login',
           {
               username, 
               password
@@ -51,7 +51,7 @@ export default function SignIn() {
 
       if(result['status'] === true){
           localStorage.setItem('token', result['token']);
-          window.location.href = '/';
+          window.location.href = '/signup';
       }
   }
 
